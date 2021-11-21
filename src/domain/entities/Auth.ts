@@ -1,12 +1,12 @@
 export abstract class _Auth {
-    
+
 }
 export default class Auth extends _Auth {
     access_token: string
     refresh_token: string
-    expires_in:number
+    expires_in: number
 
-    constructor(access_token: string,expires_in:number, refresh_token:string) {
+    constructor(access_token: string, expires_in: number, refresh_token: string) {
         super()
         this.access_token = access_token
         this.expires_in = expires_in
@@ -15,20 +15,20 @@ export default class Auth extends _Auth {
 
     static fromJsonToAuth(json: any): Auth {
         return new Auth(
-            json.access_token,
-            json.expires_in,
-            json.refresh_token,
+            json.user.accessToken,
+            json._tokenResponse.expiresIn,
+            json._tokenResponse.refreshToken,
         )
     }
-    
+
 
 
 }
 
 
 
-export class EmptyAuth extends _Auth{
-    constructor(){
+export class EmptyAuth extends _Auth {
+    constructor() {
         super()
     }
 

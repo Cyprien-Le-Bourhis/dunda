@@ -8,7 +8,7 @@ async function main() {
     initDI();
 
     const app = createApp(App)
-    
+
     // register router
     app.use(SimpleDI.get('CornRouter').router)
 

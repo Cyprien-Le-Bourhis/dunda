@@ -11,6 +11,7 @@ import GetUsersUC from "@/domain/useCases/users/getUsersUC";
 import CornRouter from "@/presentation/router/router";
 import { SimpleDI } from "typescript-simple-di";
 import CornApiService from "../data/services/corn_api_service";
+import DundaApiService from "../data/services/dunda_api_service";
 import ErrorCatcher from "./error_catcher";
 import TokenInjector from "./token_injector";
 
@@ -19,8 +20,8 @@ export function initDI(): void {
   SimpleDI.registerByName("TokenInjector", new TokenInjector());
 
   SimpleDI.registerByName(
-    "CornApiService",
-    new CornApiService(
+    "DundaApiService",
+    new DundaApiService(
       SimpleDI.get("ErrorCatcher"),
       SimpleDI.get("TokenInjector")
     )
@@ -29,7 +30,7 @@ export function initDI(): void {
   SimpleDI.registerByName("CookieService", new CookieService())
   SimpleDI.registerByName(
     "AuthRepo",
-    new AuthRepo(SimpleDI.get("CornApiService"), SimpleDI.get("TokenInjector"), SimpleDI.get("CookieService"))
+    new AuthRepo(SimpleDI.get("DundaApiService"), SimpleDI.get("TokenInjector"), SimpleDI.get("CookieService"))
   );
   SimpleDI.registerByName(
     "CornRouter",
@@ -42,11 +43,11 @@ export function initDI(): void {
 
   SimpleDI.registerByName(
     "GetAllConnections",
-    new GetAllConnections(SimpleDI.get("CornApiService"))
+    new GetAllConnections(SimpleDI.get("DundaApiService"))
   );
 
   //USERS      
-  SimpleDI.registerByName("UsersApiService", new UsersApiService(SimpleDI.get("CornApiService")))
+  SimpleDI.registerByName("UsersApiService", new UsersApiService(SimpleDI.get("DundaApiService")))
   SimpleDI.registerByName(
     "GetUsersUC",
     new GetUsersUC(SimpleDI.get("UsersApiService"))
@@ -55,7 +56,7 @@ export function initDI(): void {
 
   SimpleDI.registerByName(
     "GetMetas",
-    new GetMetas(SimpleDI.get("CornApiService"))
+    new GetMetas(SimpleDI.get("DundaApiService"))
   );
   SimpleDI.registerByName(
     "GetMetaType",
