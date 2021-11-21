@@ -1,14 +1,8 @@
 // import { Item } from './../../domain/entities/Item';
 
 import Auth from "@/domain/entities/Auth";
-import Connection from "@/domain/entities/Connection";
 import TokenInjector from "@/middleware/token_injector";
-import axiosService, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse
-} from "axios";
-import Meta from "../../domain/entities/Meta";
+
 import ErrorCatcher from "../../middleware/error_catcher";
 
 
@@ -23,7 +17,7 @@ import { Item } from "@/domain/entities/Item";
 
 
 export default class DundaApiService {
-  #axios: AxiosInstance;
+
   #tokenInjector: TokenInjector;
   #firebaseConfig: FireBaseConfig;
   #firebaseInstance: FirebaseApp;
@@ -43,9 +37,6 @@ export default class DundaApiService {
       "G-PLDD1L2L5K",
     );
 
-    this.#axios = axiosService.create({
-      baseURL: this.#firebaseConfig.authDomain,
-    });
 
     this.#firebaseInstance = this.#initializeFireBase(this.#firebaseConfig)
 
@@ -56,66 +47,6 @@ export default class DundaApiService {
     return initializeApp(firebaseConfig);
   }
 
-  #getAxiosConfig(body?: Record<string, any>): AxiosRequestConfig {
-    return {
-      data: { ...body },
-      headers: {
-        Authorization: `Bearer ${this.#tokenInjector.injectToken()}`,
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-    };
-  }
-
-  //GLOBAL GET METHOD
-  // async get(
-  //   url: string,
-  //   params?: Record<string, unknown>,
-  // ): Promise<AxiosResponse> {
-
-  //   try {
-  //     const resp = await this.#axios.get(url, {
-  //       ...this.#getAxiosConfig(),
-  //       params: params,
-  //     });
-
-  //     return resp;
-  //   } catch (e) {
-  //     throw this.#errorCatcher.processError(e as Error);
-  //   }
-  // }
-  //GLOBAL POST METHOD
-  async post(
-    url: string,
-    params: Record<string, unknown> | null,
-    body: Record<string, unknown> | null
-  ): Promise<AxiosResponse> {
-    try {
-      const resp = await this.#axios.post(url, body, {
-        ...this.#getAxiosConfig(),
-        params: params,
-      });
-      return resp;
-    } catch (e) {
-      throw this.#errorCatcher.processError(e as Error);
-    }
-  }
-  //GLOBAL POST METHOD
-  async put(
-    url: string,
-    params: Record<string, unknown> | null,
-    body: Record<string, unknown> | null
-  ): Promise<AxiosResponse> {
-    try {
-      const resp = await this.#axios.put(url, body, {
-        ...this.#getAxiosConfig(),
-        params: params,
-      });
-      return resp;
-    } catch (e) {
-      throw this.#errorCatcher.processError(e as Error);
-    }
-  }
 
   async getItems() {
     const querySnapshot = await (await (getDocs(collection(getFirestore(), "objects")))).docs;
