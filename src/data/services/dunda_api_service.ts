@@ -57,7 +57,6 @@ export default class DundaApiService {
   //LOGIN
   async logIn(username: string, password: string): Promise<Auth> {
     console.log(username, password)
-
     const auth = getAuth();
     const response =
       await signInWithEmailAndPassword(auth, username, password)
