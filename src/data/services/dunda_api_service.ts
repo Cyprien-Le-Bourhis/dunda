@@ -1,4 +1,4 @@
-import { Item } from './../../domain/entities/Item';
+// import { Item } from './../../domain/entities/Item';
 
 import Auth from "@/domain/entities/Auth";
 import Connection from "@/domain/entities/Connection";
@@ -117,10 +117,11 @@ export default class DundaApiService {
   }
 
   async getItems() {
-    const querySnapshot = await getDocs(collection(getFirestore(), "objects"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-    });
+    // let itemsTmp: [] = [];
+    const querySnapshot = await (await (getDocs(collection(getFirestore(), "objects")))).docs;
+
+    console.log(querySnapshot)
+
 
   }
 
