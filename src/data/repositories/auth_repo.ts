@@ -35,8 +35,10 @@ export default class AuthRepo {
   }
 
   async login(email: string, password: string): Promise<void> {
+    console.log('Login !')
     const resp = await this.#dundaApiService.logIn(email, password);
     this.#isAuth = resp;
+    console.log('repsonse de dundalogin', resp)
     if (this.#isAuth instanceof Auth) {
       this.#cookieService.set("token", this.#isAuth.access_token, this.#isAuth.expires_in)
       this.#cookieService.set("refresh_token", this.#isAuth.refresh_token, this.#isAuth.expires_in)

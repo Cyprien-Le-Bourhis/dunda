@@ -132,22 +132,22 @@ export default class DundaApiService {
   async logIn(username: string, password: string): Promise<Auth> {
     console.log(username, password)
     const auth = getAuth();
-    let response;
-    signInWithEmailAndPassword(auth, username, password)
-      .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        console.log(userCredential)
-        // ...
-        response = userCredential
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+    const response =
+      await signInWithEmailAndPassword(auth, username, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
 
-      });
+          // ...
+          return userCredential
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
 
-    return Auth.fromJsonToAuth(response);
+        });
+
+    return await Auth.fromJsonToAuth(response);
     // const response = (
 
     // ).data;
