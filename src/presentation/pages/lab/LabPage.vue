@@ -16,5 +16,6 @@ import TableGrid from "@/presentation/components/table/TableGrid.vue";
   },
 })
 export default class LabPage extends Vue {
+  
 }
 </script>

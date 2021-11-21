@@ -1,3 +1,4 @@
+import { Item } from './../../domain/entities/Item';
 
 import Auth from "@/domain/entities/Auth";
 import Connection from "@/domain/entities/Connection";
@@ -14,6 +15,11 @@ import ErrorCatcher from "../../middleware/error_catcher";
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
+
+
+import { collection, getFirestore, getDocs } from "firebase/firestore";
+
+
 
 export default class DundaApiService {
   #axios: AxiosInstance;
@@ -39,18 +45,17 @@ export default class DundaApiService {
     this.#axios = axiosService.create({
       baseURL: this.#firebaseConfig.authDomain,
     });
+
     this.#firebaseInstance = this.#initializeFireBase(this.#firebaseConfig)
 
     this.#errorCatcher = errorCatcher;
   }
 
   #initializeFireBase(firebaseConfig: FireBaseConfig) {
-    console.log("init firbase")
     return initializeApp(firebaseConfig);
   }
 
   #getAxiosConfig(body?: Record<string, any>): AxiosRequestConfig {
-
     return {
       data: { ...body },
       headers: {
@@ -62,22 +67,22 @@ export default class DundaApiService {
   }
 
   //GLOBAL GET METHOD
-  async get(
-    url: string,
-    params?: Record<string, unknown>,
-  ): Promise<AxiosResponse> {
+  // async get(
+  //   url: string,
+  //   params?: Record<string, unknown>,
+  // ): Promise<AxiosResponse> {
 
-    try {
-      const resp = await this.#axios.get(url, {
-        ...this.#getAxiosConfig(),
-        params: params,
-      });
+  //   try {
+  //     const resp = await this.#axios.get(url, {
+  //       ...this.#getAxiosConfig(),
+  //       params: params,
+  //     });
 
-      return resp;
-    } catch (e) {
-      throw this.#errorCatcher.processError(e as Error);
-    }
-  }
+  //     return resp;
+  //   } catch (e) {
+  //     throw this.#errorCatcher.processError(e as Error);
+  //   }
+  // }
   //GLOBAL POST METHOD
   async post(
     url: string,
@@ -111,33 +116,25 @@ export default class DundaApiService {
     }
   }
 
-  //CONNECTIONS
-  async getConnections(
-    params?: Record<string, unknown>
-  ): Promise<Connection[]> {
-    const response = (await this.get("/connections", params)).data.datas;
-    return response.map(
-      (connectionRes: any): Connection =>
-        Connection.fromJsonToConnection(connectionRes)
-    );
+  async getItems() {
+    const querySnapshot = await getDocs(collection(getFirestore(), "objects"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+    });
+
   }
 
-  //METAS
-  async getMetas(): Promise<Meta[]> {
-    const response = (await this.get("/metas")).data;
-    return response.map((meta: any): Meta => Meta.fromJsonToMeta(meta));
-  }
 
   //LOGIN
   async logIn(username: string, password: string): Promise<Auth> {
     console.log(username, password)
+
     const auth = getAuth();
     const response =
       await signInWithEmailAndPassword(auth, username, password)
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-
           // ...
           return userCredential
         })
@@ -147,13 +144,12 @@ export default class DundaApiService {
 
         });
 
+
     return await Auth.fromJsonToAuth(response);
-    // const response = (
-
-    // ).data;
-
 
   }
+  //TODO logout
+
 }
 
 class FireBaseConfig {
