@@ -1,0 +1,31 @@
+$variable-prefix: 'bs-';
+
+// Context colors
+
+// $primary: #{'var(--themecolor-primary, #3899ec)'} !default;
+$primary: #3899ec !default;
+$secondary: #374351 !default;
+$success: #70b77e !default; // 46be8a
+$info: #3799EC !default;
+$warning: #FFDE29 !default;
+$danger: #d72638 !default;
+$light: #FFFFFF !default;
+$dark: #000000 !default;
+
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+);
+
+
+// Typography
+
+// font-awesome
+$fa-font-path: "~@fortawesome/fontawesome-pro/webfonts" !default;
+$font-fontawesome: "Font Awesome 5 Pro";

@@ -1,0 +1,22 @@
+// customize Bootstrap
+@import "./_bootstrap.scss";
+
+// theme variant
+@import "./_theme.scss";
+
+// - Fonts
+//
+// Open Sans
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+// font Manrope
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
+
+// FontAwesome
+@import "~@fortawesome/fontawesome-pro/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-pro/scss/regular.scss";
+@import "~@fortawesome/fontawesome-pro/scss/solid.scss";
+@import "~@fortawesome/fontawesome-pro/scss/light.scss";
+@import "~@fortawesome/fontawesome-pro/scss/duotone.scss";
+
+// Corn Layouts
+@import "./layouts/_offline.scss";

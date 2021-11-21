@@ -1,0 +1,24 @@
+html, body, #app {
+  height: 100%;
+}
+
+body[data-layout="offline"] {
+ background: url('https://images.pexels.com/photos/4784186/pexels-photo-4784186.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=960&w=1920') no-repeat center transparent;
+ background-size: cover;
+}
+
+#OfflineLayout {
+ section {
+  background-color: #ffffff;
+  padding: 1.25rem;
+  margin: auto 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include media-breakpoint-up(lg) {
+   max-width: 60vw;
+   margin: 0 0 0 auto;
+   padding: 2rem;
+  }
+ }
+}
