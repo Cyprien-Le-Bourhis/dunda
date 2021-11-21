@@ -9,7 +9,7 @@
 import { SimpleDI } from 'typescript-simple-di';
 export default {
   async mounted(){
-  console.log("item data",  SimpleDI.get("GetItems").execute()
+  console.log("item data",  await SimpleDI.get("GetItems").execute()
  )
   
   

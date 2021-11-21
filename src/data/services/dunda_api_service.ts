@@ -18,6 +18,7 @@ import { getAnalytics } from "firebase/analytics";
 
 
 import { collection, getFirestore, getDocs } from "firebase/firestore";
+import { Item } from "@/domain/entities/Item";
 
 
 
@@ -117,12 +118,8 @@ export default class DundaApiService {
   }
 
   async getItems() {
-    // let itemsTmp: [] = [];
     const querySnapshot = await (await (getDocs(collection(getFirestore(), "objects")))).docs;
-
-    console.log(querySnapshot)
-
-
+    return querySnapshot.map((item: any): Item => Item.fromJsonToItem(item.data()));
   }
 
 

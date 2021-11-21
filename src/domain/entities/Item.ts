@@ -22,7 +22,7 @@ export class Item {
 
   }
 
-  static fromJsonToUser(json: any): Item {
+  static fromJsonToItem(json: any): Item {
     return new Item(
       json.type,
       json.name,
