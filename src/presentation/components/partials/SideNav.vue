@@ -1,9 +1,8 @@
 <template>
   <div id="menu">
-    <router-link to="/connections"> connections</router-link>
-    <router-link to="/users"> users</router-link>
-    <router-link to="/theme"> theme</router-link>
-    <button @click="onLogOutClick">Log Out</button>
+    <router-link class="text-white text-decoration-none" to="/"> Home</router-link>
+    <router-link class="text-white text-decoration-none" to="/craftery"> <i class="fas fa-gavel"></i> Craftery</router-link>
+    <button class="btn btn-primary" @click="onLogOutClick">Log Out</button>
   </div>
 </template>
 
@@ -25,14 +24,15 @@ export default class SideNav extends Vue {
   }
 }
 </script>
-<style>
+<style lang="scss">
 #menu {
   display: flex;
-  flex-direction: column;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 200px;
-  background-color: aquamarine;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  padding: 0.5rem;
+  background: rgba(white, 0.2);
 }
 </style>

@@ -24,6 +24,6 @@ export default class DefaultLayout extends Vue {}
 .container-main {
   width: 100vw;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 </style>

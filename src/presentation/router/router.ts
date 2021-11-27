@@ -1,3 +1,4 @@
+import Craftery from '../pages/craftery/Craftery.vue';
 import AuthRepo from '@/data/repositories/auth_repo';
 import ConnectionList from '@/presentation/pages/connections/connection_list.vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
@@ -6,6 +7,7 @@ import Home from '../pages/Home.vue';
 import UserDetailsPage from '../pages/users/UserDetailsPage.vue';
 import UsersPage from '../pages/users/UsersPage.vue';
 import ThemePage from '@/presentation/pages/ThemePage.vue'
+
 import LabPage from '../pages/lab/LabPage.vue';
 
 export default class CornRouter {
@@ -20,6 +22,15 @@ export default class CornRouter {
             },
             component: Home,
         },
+        {
+            path: "/craftery",
+            name: "Craftery",
+            meta: {
+                requiresAuth: true,
+            },
+            component: Craftery,
+        },
+
         {
             path: "/users",
             name: "users",
