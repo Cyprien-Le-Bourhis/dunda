@@ -22,10 +22,12 @@ export default class AuthRepo {
     const expiresIn = this.#cookieService.get("expires_in")
     const refreshToken = this.#cookieService.get("refresh_token")
     const token = this.#cookieService.get("token")
-    if (expiresIn && refreshToken && token) {
-      this.#isAuth = new Auth(token, parseInt(expiresIn), refreshToken)
+    const uid = this.#cookieService.get("uid")
+    if (expiresIn && refreshToken && token && uid) {
+      this.#isAuth = new Auth(token, parseInt(expiresIn), refreshToken, uid)
       if (this.#isAuth instanceof Auth) {
-        this.#tokenInjector.saveToken(this.#isAuth.access_token)
+        this.#tokenInjector.saveToken(this.#isAuth.access_token, this.#isAuth.refresh_token, this.#isAuth.uid)
+
       }
     }
   }
@@ -43,7 +45,8 @@ export default class AuthRepo {
       this.#cookieService.set("token", this.#isAuth.access_token, this.#isAuth.expires_in)
       this.#cookieService.set("refresh_token", this.#isAuth.refresh_token, this.#isAuth.expires_in)
       this.#cookieService.set("expires_in", this.#isAuth.expires_in.toString(), this.#isAuth.expires_in)
-      this.#tokenInjector.saveToken(this.#isAuth.access_token);
+      this.#cookieService.set("uid", this.#isAuth.uid, this.#isAuth.expires_in)
+      this.#tokenInjector.saveToken(this.#isAuth.access_token, this.#isAuth.refresh_token, this.#isAuth.uid);
     }
   }
 

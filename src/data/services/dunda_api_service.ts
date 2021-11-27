@@ -1,19 +1,19 @@
+import Auth from '@/domain/entities/Auth';
 // import { Item } from './../../domain/entities/Item';
 
-import Auth from "@/domain/entities/Auth";
+
 import TokenInjector from "@/middleware/token_injector";
 
 import ErrorCatcher from "../../middleware/error_catcher";
 
 
-import { FirebaseApp, initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseApp, FirebaseError, initializeApp } from "firebase/app";
+import { browserSessionPersistence, getAuth, setPersistence, signInWithCustomToken, signInWithEmailAndPassword } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 
 import { collection, getFirestore, getDocs } from "firebase/firestore";
 import { Item } from "@/domain/entities/Item";
-
 
 
 export default class DundaApiService {
@@ -22,7 +22,7 @@ export default class DundaApiService {
   #firebaseConfig: FireBaseConfig;
   #firebaseInstance: FirebaseApp;
   #errorCatcher: ErrorCatcher;
-
+  #auth: any;
 
 
   constructor(errorCatcher: ErrorCatcher, tokenInjector: TokenInjector) {
@@ -36,10 +36,8 @@ export default class DundaApiService {
       "1:443187106363:web:b918f405fbc6784981421e",
       "G-PLDD1L2L5K",
     );
-
-
     this.#firebaseInstance = this.#initializeFireBase(this.#firebaseConfig)
-
+    this.#auth = getAuth()
     this.#errorCatcher = errorCatcher;
   }
 
@@ -49,17 +47,26 @@ export default class DundaApiService {
 
 
   async getItems() {
-    const querySnapshot = await (await (getDocs(collection(getFirestore(), "objects")))).docs;
-    return querySnapshot.map((item: any): Item => Item.fromJsonToItem(item.data()));
+    try {
+      const querySnapshot = await (await (getDocs(collection(getFirestore(), "objects")))).docs;
+      return querySnapshot.map((item: any): Item => Item.fromJsonToItem(item.data()));
+    } catch (error: any) {
+      const errorCode = error?.code;
+      const errorMessage = error.message;
+      console.log("error", errorCode, errorMessage)
+      if (errorCode.includes("permission-denied")) {
+        console.warn("c'est un probleme de permision , certainnement de conneciton")
+
+      }
+    }
   }
 
 
-  //LOGIN
-  async logIn(username: string, password: string): Promise<Auth> {
-    console.log(username, password)
+  async logByToken(token): Promise<Auth> {
+    console.log(token)
     const auth = getAuth();
     const response =
-      await signInWithEmailAndPassword(auth, username, password)
+      await signInWithCustomToken(this.#auth, token)
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
@@ -69,11 +76,42 @@ export default class DundaApiService {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-
+          console.log(errorCode, errorMessage)
         });
 
 
     return await Auth.fromJsonToAuth(response);
+
+  }
+
+
+
+  //LOGIN
+  async logInWithoutPersitence(username: string, password: string): Promise<Auth> {
+    console.log(username, password)
+    const auth = getAuth();
+
+    const response = await setPersistence(this.#auth, browserSessionPersistence).then(async () => {
+      return signInWithEmailAndPassword(auth, username, password)
+
+    })
+    console.log(response)
+    return await Auth.fromJsonToAuth(response);
+
+
+  }
+
+
+  async logIn(username: string, password: string): Promise<Auth> {
+    console.log(username, password)
+    const auth = getAuth();
+    const response = await setPersistence(this.#auth, browserSessionPersistence).then(async () => {
+      return signInWithEmailAndPassword(auth, username, password)
+
+    })
+    console.log(response)
+    return await Auth.fromJsonToAuth(response);
+
 
   }
   //TODO logout
