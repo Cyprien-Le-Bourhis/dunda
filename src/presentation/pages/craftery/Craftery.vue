@@ -5,11 +5,23 @@
   <hr>
   <div class="container-fluid">
     <div class="row">
-        <div class="col" v-for="(item , key) in items" :key="key" >
-           {{item}}
+        <div class="col-auto text-center " v-for="(item , key) in items" :key="key" >
+          <div :class="['_badge', item['rarety']]">
+            <div class="_pattern"></div>
+            <div class="_item">
+              <i :class="[item['icon']]"></i>
+              <div class="_wallet_jewel">
+                <div class="_jewel"></div>
+                <div class="_jewel"></div>
+                <div class="_jewel"></div>
+              </div>
+            </div>
+        </div>
+          <span > {{item.name}}</span>
         </div>
     </div>
 
+  
   </div>
 </template>
 
@@ -28,7 +40,6 @@ export default {
      async function fetchitems(){
         items.value  = await SimpleDI.get("GetItems").execute()
       }
-    
     fetchitems()
    return {items}
   }
