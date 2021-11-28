@@ -118,20 +118,20 @@ $assetsPath: "./../../assets/";
     cursor: pointer;
 
     &:hover {
-        transition: all 0.35 ease-in-out;
-        margin: 3rem;
-        animation: none;
-        animation-play-state: paused;
+        // transition: all 0.35 ease-in-out;
+        // margin: 3rem;
+        // animation: none;
+        // animation-play-state: paused;
         transition: all 0.2s ease-in-out;
-        transform: scale(1.2) translateY(-30px);
-        filter: saturate(1) brightness(1.1);
+        transform: scale(1.03);
+        // transform: scale(1.01) translateY(-30px);
+        // filter: saturate(1) brightness(1.1);
     }
 
-    &:active {
-        transition: all 0.1s ease-in-out;
-        transform: scale(0.8);
-    }
-
+    // &:active {
+    //     transition: all 0.1s ease-in-out;
+    //     transform: scale(0.8);
+    // }
     position: relative;
 
     &::before {
@@ -161,7 +161,7 @@ $assetsPath: "./../../assets/";
         display: block;
     }
 
-    margin: 1rem;
+    margin:1rem 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;

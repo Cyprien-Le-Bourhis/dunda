@@ -5,6 +5,7 @@ import CheckTokenCookieUC from "@/domain/useCases/auth/checkTokenCookieUC";
 import LogInUC from "@/domain/useCases/auth/logInUC";
 import LogOutUC from "@/domain/useCases/auth/logOutUC";
 import GetAllConnections from "@/domain/useCases/connections/getAllConnectionsUC";
+import CreateItemsUC from "@/domain/useCases/items/createItemUc";
 import GetItemsUC from "@/domain/useCases/items/getItemsUC";
 import GetMetas from "@/domain/useCases/meta_datas/getMetasUC";
 import GetMetaType from "@/domain/useCases/meta_datas/getMetaType";
@@ -60,6 +61,11 @@ export function initDI(): void {
     "GetItems",
     new GetItemsUC(SimpleDI.get("DundaApiService"))
   );
+  SimpleDI.registerByName(
+    "CreateItemsUC",
+    new CreateItemsUC(SimpleDI.get("DundaApiService"))
+  );
+
 
   SimpleDI.registerByName(
     "GetMetas",

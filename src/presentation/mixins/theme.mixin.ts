@@ -3,10 +3,10 @@
  */
 
 import { Vue } from 'vue-class-component'
-import { hexToRgb, hexToHsl, hslToHex} from '@/presentation/helpers/color-converter'
+import { hexToRgb, hexToHsl, hslToHex } from '@/presentation/helpers/color-converter'
 
 const themeColorsDefault = {
-  'primary': '#3899ec',
+  'primary': '#red',
   'secondary': '#374351',
   'success': '#70b77e',
   'info': '#3799EC',
@@ -19,7 +19,7 @@ const themeColorsDefault = {
 // TODO: move colors, (api, config...)
 const themeColors = {
   ...themeColorsDefault,
-  'primary': '#23b5b5',
+  'primary': '#9019e1',
   'primary-light': '#DBEDFC',
   'secondary': '#F9BB2F',
   'third': '#374351',

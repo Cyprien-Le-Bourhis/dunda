@@ -1,5 +1,4 @@
-# corn_starter
-
+# Dunda
 ## Project setup
 ```
 npm install

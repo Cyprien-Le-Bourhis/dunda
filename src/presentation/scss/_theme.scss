@@ -1,6 +1,6 @@
-
 // btn-variant-loops
-@each $color, $value in $theme-colors {
+@each $color,
+$value in $theme-colors {
   $theme-color: var(--#{$variable-prefix}#{$color}, $value);
   $theme-color-rgb: var(--#{$variable-prefix}#{$color}-rgb, $value);
   $theme-color-light: var(--#{$variable-prefix}#{$color}--light, $value);
@@ -9,35 +9,42 @@
   .btn-#{$color} {
     background-color: $theme-color;
     border-color: $theme-color;
+    color: $white;
 
     &:hover {
       background-color: $theme-color-light;
       border-color: $theme-color-light;
     }
+
     &:active {
       background-color: $theme-color-lighter;
       border-color: $theme-color-lighter;
     }
+
     &:active:focus {
       box-shadow: 0 0 0 0.25rem rgba($theme-color-rgb, 0.5);
     }
   }
+
   .btn-outline-#{$color} {
     color: $theme-color;
     border-color: $theme-color;
 
     &:hover {
-      color: #000;
+      color: #fff !important;
       background-color: $theme-color;
       border-color: $theme-color;
     }
+
     &:active:focus {
       box-shadow: 0 0 0 0.25rem rgba($theme-color-rgb, 0.5);
     }
   }
 }
+
 // alert-variant-loops
-@each $color, $value in $theme-colors {
+@each $color,
+$value in $theme-colors {
   $theme-color: var(--#{$variable-prefix}#{$color}, $value);
   $theme-color-lighter: var(--#{$variable-prefix}#{$color}--lighter, $value);
 
@@ -48,7 +55,8 @@
 }
 
 // table-variant-loops
-@each $color, $value in $theme-colors {
+@each $color,
+$value in $theme-colors {
   $theme-color: var(--#{$variable-prefix}#{$color}--lighter, $value);
 
   .table-#{$color} {
@@ -72,14 +80,16 @@
 }
 
 // link-variant-loops
-@each $color, $value in $theme-colors {
+@each $color,
+$value in $theme-colors {
   $theme-color: var(--#{$variable-prefix}#{$color}, $value);
   $theme-color-light: var(--#{$variable-prefix}#{$color}--light, $value);
 
   .link-#{$color} {
     color: $theme-color;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: $theme-color-light;
     }
   }

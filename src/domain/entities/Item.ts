@@ -3,7 +3,7 @@ export class Item {
   name: string;
   rarety: string;
   value: number;
-  icon: number;
+  icon: string;
 
 
 
@@ -13,19 +13,15 @@ export class Item {
     name: string,
     rarety: string,
     value: number,
-    icon: number
+    icon: string
 
   ) {
     this.type = type,
-      this.name = name;
-    this.rarety = rarety;
-    this.value = value;
-    this.icon = icon;
-
-
+      this.name = name,
+      this.rarety = rarety,
+      this.value = value,
+      this.icon = icon
   }
-
-
 
   static fromJsonToItem(json: any): Item {
     return new Item(

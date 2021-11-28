@@ -12,7 +12,7 @@ import { browserSessionPersistence, getAuth, setPersistence, signInWithCustomTok
 import { getAnalytics } from "firebase/analytics";
 
 
-import { collection, getFirestore, getDocs } from "firebase/firestore";
+import { collection, getFirestore, getDocs, setDoc, doc } from "firebase/firestore";
 import { Item } from "@/domain/entities/Item";
 
 
@@ -23,6 +23,7 @@ export default class DundaApiService {
   #firebaseInstance: FirebaseApp;
   #errorCatcher: ErrorCatcher;
   #auth: any;
+  #db: any;
 
 
   constructor(errorCatcher: ErrorCatcher, tokenInjector: TokenInjector) {
@@ -37,6 +38,7 @@ export default class DundaApiService {
       "G-PLDD1L2L5K",
     );
     this.#firebaseInstance = this.#initializeFireBase(this.#firebaseConfig)
+    this.#db = getFirestore()
     this.#auth = getAuth()
     this.#errorCatcher = errorCatcher;
   }
@@ -61,6 +63,17 @@ export default class DundaApiService {
     }
   }
 
+  async CreateItems(datas: Item) {
+    console.log(datas)
+    await setDoc(doc(this.#db, "objects", new Date().getUTCMilliseconds().toString()), {
+      type: datas.type,
+      name: datas.name,
+      rarety: datas.rarety,
+      value: datas.value,
+      icon: datas.icon
+    });
+
+  }
 
   async logByToken(token): Promise<Auth> {
     console.log(token)
